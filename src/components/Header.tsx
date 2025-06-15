@@ -1,10 +1,14 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (path: string) => pathname === path;
 
   return (
     <header className="bg-white shadow-md">
@@ -17,23 +21,43 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
-            <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors">
+            <Link
+              href="/"
+              className={`text-gray-800 hover:text-blue-600 transition-colors ${
+                isActive('/') ? 'text-blue-600' : ''
+              }`}
+            >
               Home
             </Link>
-            <Link href="/collections" className="text-gray-700 hover:text-blue-600 transition-colors">
+            <Link
+              href="/collections"
+              className={`text-gray-800 hover:text-blue-600 transition-colors ${
+                isActive('/collections') ? 'text-blue-600' : ''
+              }`}
+            >
               Collections
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
+            <Link
+              href="/about"
+              className={`text-gray-800 hover:text-blue-600 transition-colors ${
+                isActive('/about') ? 'text-blue-600' : ''
+              }`}
+            >
               About Us
             </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-blue-600 transition-colors">
-              Contact Us
+            <Link
+              href="/contact"
+              className={`text-gray-800 hover:text-blue-600 transition-colors ${
+                isActive('/contact') ? 'text-blue-600' : ''
+              }`}
+            >
+              Contact
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-gray-700"
+            className="md:hidden text-gray-800"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <svg
@@ -59,31 +83,39 @@ const Header = () => {
           <div className="md:hidden mt-4 space-y-4">
             <Link
               href="/"
-              className="block text-gray-700 hover:text-blue-600 transition-colors"
+              className={`block text-gray-800 hover:text-blue-600 transition-colors ${
+                isActive('/') ? 'text-blue-600' : ''
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
             <Link
               href="/collections"
-              className="block text-gray-700 hover:text-blue-600 transition-colors"
+              className={`block text-gray-800 hover:text-blue-600 transition-colors ${
+                isActive('/collections') ? 'text-blue-600' : ''
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               Collections
             </Link>
             <Link
               href="/about"
-              className="block text-gray-700 hover:text-blue-600 transition-colors"
+              className={`block text-gray-800 hover:text-blue-600 transition-colors ${
+                isActive('/about') ? 'text-blue-600' : ''
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               About Us
             </Link>
             <Link
               href="/contact"
-              className="block text-gray-700 hover:text-blue-600 transition-colors"
+              className={`block text-gray-800 hover:text-blue-600 transition-colors ${
+                isActive('/contact') ? 'text-blue-600' : ''
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Contact Us
+              Contact
             </Link>
           </div>
         )}
