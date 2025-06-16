@@ -29,6 +29,8 @@ const AdminPage = () => {
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchDresses();
+        // Update existing dress categories
+        updateDressCategories();
       }
     };
     checkUser();
@@ -49,6 +51,47 @@ const AdminPage = () => {
         type: 'error',
         text: 'Error fetching dresses. Please try again.',
       });
+    }
+  };
+
+  const updateDressCategories = async () => {
+    try {
+      // Update wedding category
+      const { error: weddingError } = await supabase
+        .from('dresses')
+        .update({ category: 'Wedding Dresses' })
+        .eq('category', 'wedding');
+
+      if (weddingError) throw weddingError;
+
+      // Update party category
+      const { error: partyError } = await supabase
+        .from('dresses')
+        .update({ category: 'Party Dresses' })
+        .eq('category', 'party');
+
+      if (partyError) throw partyError;
+
+      // Update formal category
+      const { error: formalError } = await supabase
+        .from('dresses')
+        .update({ category: 'Formal Wear' })
+        .eq('category', 'formal');
+
+      if (formalError) throw formalError;
+
+      // Update casual category
+      const { error: casualError } = await supabase
+        .from('dresses')
+        .update({ category: 'Casual Wear' })
+        .eq('category', 'casual');
+
+      if (casualError) throw casualError;
+
+      // Refresh the dresses list
+      fetchDresses();
+    } catch (error) {
+      console.error('Error updating dress categories:', error);
     }
   };
 
@@ -387,10 +430,10 @@ const AdminPage = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                 >
                   <option value="">Select a category</option>
-                  <option value="wedding">Wedding Dresses</option>
-                  <option value="party">Party Dresses</option>
-                  <option value="formal">Formal Wear</option>
-                  <option value="casual">Casual Wear</option>
+                  <option value="Wedding Dresses">Wedding Dresses</option>
+                  <option value="Party Dresses">Party Dresses</option>
+                  <option value="Formal Wear">Formal Wear</option>
+                  <option value="Casual Wear">Casual Wear</option>
                 </select>
               </div>
 
@@ -524,10 +567,10 @@ const AdminPage = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                 >
                   <option value="">Select a category</option>
-                  <option value="wedding">Wedding Dresses</option>
-                  <option value="party">Party Dresses</option>
-                  <option value="formal">Formal Wear</option>
-                  <option value="casual">Casual Wear</option>
+                  <option value="Wedding Dresses">Wedding Dresses</option>
+                  <option value="Party Dresses">Party Dresses</option>
+                  <option value="Formal Wear">Formal Wear</option>
+                  <option value="Casual Wear">Casual Wear</option>
                 </select>
               </div>
 

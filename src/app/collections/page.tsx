@@ -47,7 +47,15 @@ const CollectionsPage = () => {
 
   const filteredDresses = selectedCategory === 'all'
     ? dresses
-    : dresses.filter(dress => dress.category === selectedCategory);
+    : dresses.filter(dress => {
+        console.log('Dress category:', dress.category);
+        console.log('Selected category:', selectedCategory);
+        console.log('Match:', dress.category === selectedCategory);
+        return dress.category === selectedCategory;
+      });
+
+  console.log('All dresses:', dresses);
+  console.log('Filtered dresses:', filteredDresses);
 
   const categories = [
     { id: 'all', name: 'All Collections' },
